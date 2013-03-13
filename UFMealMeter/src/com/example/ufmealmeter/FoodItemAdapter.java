@@ -19,7 +19,7 @@ public class FoodItemAdapter extends ArrayAdapter<FoodItem> {
 	private final List<Boolean> foodItemSelected;
 
 	public FoodItemAdapter(Context context, List<FoodItem> itemsList) {
-		super(context, R.layout.fooditem, itemsList);
+		super(context, R.layout.activity_indv_fooditem, itemsList);
 		this.context = context;
 		this.foodItemList = itemsList;
 		this.foodItemSelected = new ArrayList<Boolean>();
@@ -34,7 +34,7 @@ public class FoodItemAdapter extends ArrayAdapter<FoodItem> {
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		FoodItem foodItem = foodItemList.get(position);
 
-		View tweetView = inflater.inflate(R.layout.fooditem, parent, false);
+		View tweetView = inflater.inflate(R.layout.activity_indv_fooditem, parent, false);
 		TextView textView = (TextView) tweetView.findViewById(R.id.text);
 		textView.setText(foodItem.toString());
 
