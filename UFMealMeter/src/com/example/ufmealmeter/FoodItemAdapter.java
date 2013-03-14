@@ -32,8 +32,10 @@ public class FoodItemAdapter extends ArrayAdapter<FoodItem> {
 	public List<FoodItem> getSelectedFoodItemList() {
 		List<FoodItem> selfoodItemList = new ArrayList<FoodItem>();
 		int i=0;
-		if(this.foodItemSelected.get(i)){
-			selfoodItemList.add(foodItemList.get(i));
+		while(i<foodItemList.size()){
+			if(this.foodItemSelected.get(i)){
+				selfoodItemList.add(foodItemList.get(i));
+			}
 			i++;
 		}
 		return selfoodItemList;

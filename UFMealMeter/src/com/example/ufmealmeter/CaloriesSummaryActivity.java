@@ -2,41 +2,40 @@ package com.example.ufmealmeter;
 
 import java.util.ArrayList;
 
-import android.os.Bundle;
-import android.app.Activity;
+import android.app.ListActivity;
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
-import android.support.v4.app.NavUtils;
 
-public class CaloriesSummaryActivity extends Activity {
+public class CaloriesSummaryActivity extends ListActivity {
 	String position;
 	int totalCalories = 0;
 	float totalCarbs = 0;
 	float totalFat = 0;
-	
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_calories_summary);
-		// Show the Up button in the action bar.
 		setupActionBar();
-		
+
 		// Select position from previous activity and bring that menu here
 		position = this.getIntent().getExtras().getString("position");
-		
+
 		totalCalories = this.getIntent().getExtras().getInt("totalCal");
 		totalCarbs = this.getIntent().getExtras().getFloat("totalCarbs");
 		totalFat = this.getIntent().getExtras().getFloat("totalFat");
-		ArrayList<String> selFoodString = this.getIntent().getExtras().getStringArrayList("foodNames");
-		Toast.makeText(CaloriesSummaryActivity.this, "" + selFoodString.get(0),
-				Toast.LENGTH_SHORT).show();
+		ArrayList<String> selFoodString = this.getIntent().getExtras()
+				.getStringArrayList("foodNames");
 		
 		
-		
-		
+
+		CaloriesSummaryAdapter adapter = new CaloriesSummaryAdapter(this,
+				selFoodString);
+
+		setListAdapter(adapter);
+
 	}
 
 	/**
@@ -66,13 +65,13 @@ public class CaloriesSummaryActivity extends Activity {
 			//
 			// http://developer.android.com/design/patterns/navigation.html#up-vs-back
 			//
-			Intent intent = new Intent(CaloriesSummaryActivity.this, FoodItemActivity.class);
+			Intent intent = new Intent(CaloriesSummaryActivity.this,
+					FoodItemActivity.class);
 			intent.putExtra("position", position);
 			NavUtils.navigateUpTo(this, intent);
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
 	}
-	
-	
+
 }
