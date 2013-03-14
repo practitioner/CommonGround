@@ -2,14 +2,21 @@ package com.example.ufmealmeter;
 
 import java.util.ArrayList;
 
-import android.app.ListActivity;
+import android.app.Activity;
 import android.content.Intent;
+import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
 
-public class CaloriesSummaryActivity extends ListActivity {
+public class CaloriesSummaryActivity extends Activity {
+
 	String position;
 	int totalCalories = 0;
 	float totalCarbs = 0;
@@ -18,6 +25,8 @@ public class CaloriesSummaryActivity extends ListActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_calories_summary);
+		// Show the Up button in the action bar.
 		setupActionBar();
 
 		// Select position from previous activity and bring that menu here
@@ -26,16 +35,21 @@ public class CaloriesSummaryActivity extends ListActivity {
 		totalCalories = this.getIntent().getExtras().getInt("totalCal");
 		totalCarbs = this.getIntent().getExtras().getFloat("totalCarbs");
 		totalFat = this.getIntent().getExtras().getFloat("totalFat");
-		ArrayList<String> selFoodString = this.getIntent().getExtras()
+		ArrayList<String> selectedFoodItems = this.getIntent().getExtras()
 				.getStringArrayList("foodNames");
 		
+		FoodNameAdapter adapter = new FoodNameAdapter(getApplicationContext(), selectedFoodItems);
+		ListView food_list = (ListView) findViewById(R.id.selected_fooditem);
+		food_list.setAdapter(adapter);
 		
-
-		CaloriesSummaryAdapter adapter = new CaloriesSummaryAdapter(this,
-				selFoodString);
-
-		setListAdapter(adapter);
-
+		TextView cal = (TextView) findViewById(R.id.total_calories);
+		cal.setText("Total Calories : " + String.valueOf(totalCalories) + "\n");
+		
+		TextView carbs = (TextView) findViewById(R.id.total_carbs);
+		carbs.setText("Total Carbs : " + String.valueOf(totalCarbs) + "\n");
+		
+		TextView fat = (TextView) findViewById(R.id.total_fat);
+		fat.setText("Total Fat : " + String.valueOf(totalFat) + "\n");
 	}
 
 	/**
@@ -49,7 +63,6 @@ public class CaloriesSummaryActivity extends ListActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.calories_summary, menu);
 		return true;
 	}
@@ -58,13 +71,6 @@ public class CaloriesSummaryActivity extends ListActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case android.R.id.home:
-			// This ID represents the Home or Up button. In the case of this
-			// activity, the Up button is shown. Use NavUtils to allow users
-			// to navigate up one level in the application structure. For
-			// more details, see the Navigation pattern on Android Design:
-			//
-			// http://developer.android.com/design/patterns/navigation.html#up-vs-back
-			//
 			Intent intent = new Intent(CaloriesSummaryActivity.this,
 					FoodItemActivity.class);
 			intent.putExtra("position", position);

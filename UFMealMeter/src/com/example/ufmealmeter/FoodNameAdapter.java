@@ -9,15 +9,15 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-public class CaloriesSummaryAdapter extends ArrayAdapter<String> {
+public class FoodNameAdapter extends ArrayAdapter<String> {
 
 	private final Context context;
-	private final List<String> summary;
+	private final List<String> StringList;
 
-	public CaloriesSummaryAdapter(Context context, List<String> itemsList) {
-		super(context, R.layout.activity_indv_calories_summary, itemsList);
+	public FoodNameAdapter(Context context, List<String> itemsList) {
+		super(context, R.layout.activity_indv_sel_fooditem, itemsList);
 		this.context = context;
-		this.summary = itemsList;
+		this.StringList = itemsList;
 	}
 
 
@@ -25,11 +25,12 @@ public class CaloriesSummaryAdapter extends ArrayAdapter<String> {
 	public View getView(final int position, View convertView, ViewGroup parent) {
 		LayoutInflater inflater = (LayoutInflater) context
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		String summaryText = summary.get(position);
+		String String = StringList.get(position);
 
-		View tweetView = inflater.inflate(R.layout.activity_indv_calories_summary, parent, false);
-		TextView textView = (TextView) tweetView.findViewById(R.id.summary_text);
-		textView.setText(summaryText);
+		View tweetView = inflater.inflate(R.layout.activity_indv_sel_fooditem, parent, false);
+		TextView textView = (TextView) tweetView.findViewById(R.id.text);
+		textView.setText(String.toString());
+
 		return tweetView;
 
 	}

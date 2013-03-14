@@ -6,6 +6,6 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_go">Go</string>
     <string name="select_food_item">Select Food!</string>
-    <string name="title_activity_calories_summary">Your food summary</string>
-
+    <string name="title_activity_calories_summary"></string>
+	<string name="meal_summary">Your meal summary!</string>
 </resources>
