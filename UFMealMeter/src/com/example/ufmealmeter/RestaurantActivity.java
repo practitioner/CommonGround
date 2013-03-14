@@ -29,8 +29,6 @@ public class RestaurantActivity extends Activity {
 					int position, long id) {
 				Intent intent = new Intent(RestaurantActivity.this, FoodItemActivity.class);
 				intent.putExtra("position", position);
-				/*Toast.makeText(MainActivity.this, "" + position,
-						Toast.LENGTH_SHORT).show();*/
 				startActivity(intent);
 			}
 		});

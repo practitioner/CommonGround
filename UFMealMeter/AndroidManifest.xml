@@ -22,13 +22,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-         <activity
+        <activity
             android:name="com.example.ufmealmeter.FoodItemActivity"
             android:label="@string/select_food_item"
             android:parentActivityName="com.example.ufmealmeter.RestaurantActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.ufmealmeter.RestaurantActivity" />
+        </activity>
+        <activity
+            android:name="com.example.ufmealmeter.CaloriesSummaryActivity"
+            android:label="@string/title_activity_calories_summary"
+            android:parentActivityName="com.example.ufmealmeter.FoodItemActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.ufmealmeter.FoodItemActivity" />
         </activity>
     </application>
 

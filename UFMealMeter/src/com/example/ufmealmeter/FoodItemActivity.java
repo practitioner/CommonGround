@@ -9,12 +9,20 @@ import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 import android.app.ListActivity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 public class FoodItemActivity extends ListActivity {
+
+	String position;
+	FoodItemAdapter adapter;
+	int totalCalories = 0;
+	float totalCarbs = 0;
+	float totalFat = 0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -24,10 +32,9 @@ public class FoodItemActivity extends ListActivity {
 		setupActionBar();
 
 		// Select position from previous activity and bring that menu here
-		String position = this.getIntent().getExtras().getString("position");
+		position = this.getIntent().getExtras().getString("position");
 
-		FoodItemAdapter adapter = new FoodItemAdapter(this,
-				readPanda());
+		adapter = new FoodItemAdapter(this, readPanda());
 
 		setListAdapter(adapter);
 
@@ -41,7 +48,6 @@ public class FoodItemActivity extends ListActivity {
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 
 	}
-	
 
 	public void printItems(ArrayList<FoodItem> fd) {
 		System.out.println("Size: " + fd.size());
@@ -52,9 +58,9 @@ public class FoodItemActivity extends ListActivity {
 
 	}
 
-	
 	/**
 	 * Populates the Panda menu
+	 * 
 	 * @return
 	 */
 	private ArrayList<FoodItem> readPanda() {
@@ -127,8 +133,30 @@ public class FoodItemActivity extends ListActivity {
 			//
 			NavUtils.navigateUpFromSameTask(this);
 			return true;
+		case R.id.menu_go:
+			Intent intent = new Intent(FoodItemActivity.this,
+					CaloriesSummaryActivity.class);
+			intent.putStringArrayListExtra("foodNames", calculateSummary());
+			intent.putExtra("totalCal", totalCalories);
+			intent.putExtra("totalCarbs", totalCarbs);
+			intent.putExtra("totalFat", totalFat);
+			intent.putExtra("position", position);
+			startActivity(intent);
+			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	private ArrayList<String> calculateSummary() {
+		ArrayList<String> selFoodString = new ArrayList<String>();
+		for (FoodItem fd : adapter.getSelectedFoodItemList()) {
+			selFoodString.add(fd.foodName);
+			totalCalories = totalCalories + fd.calories;
+			totalCarbs = totalCarbs + fd.totalCarbs;
+			totalFat = totalFat + fd.totalFat;
+		}
+
+		return selFoodString;
 	}
 
 }
