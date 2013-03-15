@@ -7,5 +7,12 @@
     <string name="action_go">Go</string>
     <string name="select_food_item">Select Food!</string>
     <string name="title_activity_calories_summary"></string>
-	<string name="meal_summary">Your meal summary!</string>
+    <string name="meal_summary">Your meal summary!</string>
+    <string name="title_activity_user_info">UserInfo</string>
+    <string name="calories_per_day">calories/day</string>
+    <string name="budget_per_day">per day</string>
+    <string name="dollar_sign">$</string>
+    <string name="calorie_threshold">Calorie Threshold</string>
+    <string name="budget_threshold">Budget Threshold</string>
+
 </resources>

@@ -38,7 +38,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.ufmealmeter.FoodItemActivity" />
         </activity>
-     
+        <activity
+            android:name="com.example.ufmealmeter.UserInfoActivity"
+            android:label="@string/title_activity_user_info"
+            android:parentActivityName="com.example.ufmealmeter.RestaurantActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.ufmealmeter.RestaurantActivity" />
+        </activity>
     </application>
 
 </manifest>

@@ -48,7 +48,7 @@ public class RestaurantActivity extends Activity {
 			public void onItemClick(AdapterView<?> parent, View v,
 					int position, long id) {
 				Intent intent = new Intent(RestaurantActivity.this,
-						FoodItemActivity.class);
+						UserInfoActivity.class);
 				intent.putExtra("position", position);
 				startActivity(intent);
 			}
