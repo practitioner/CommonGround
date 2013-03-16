@@ -5,5 +5,9 @@
         android:orderInCategory="100"
         android:showAsAction="never"
         android:title="@string/action_settings"/>
+    <item
+        android:id="@+id/menu_save_user_threshold"
+        android:icon="@drawable/ic_menu_save_user_threshold"
+        android:showAsAction="ifRoom"/>
 
 </menu>

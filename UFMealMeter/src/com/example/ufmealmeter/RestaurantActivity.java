@@ -43,7 +43,7 @@ public class RestaurantActivity extends Activity {
 				getActions());
 		ListView action_list = (ListView) findViewById(R.id.action_list);
 		action_list.setAdapter(adapter);
-
+		
 		action_list.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View v,
 					int position, long id) {
