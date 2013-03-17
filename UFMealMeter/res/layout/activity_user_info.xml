@@ -19,12 +19,12 @@
         android:id="@+id/cal_threshold_ll"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" 
-        android:visibility="invisible">
+        android:orientation="horizontal"
+        android:visibility="invisible" >
 
         <EditText
             android:id="@+id/calories_per_day"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.89"
             android:inputType="numberDecimal" >
@@ -38,6 +38,28 @@
             android:text="@string/calories_per_day" />
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/cal_threshold_ll_ll"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:visibility="invisible" >
+
+        <Button
+            android:id="@+id/ok_calorie"
+            style="@style/AppBaseTheme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ok" />
+
+        <Button
+            android:id="@+id/cancel_calorie"
+            style="@style/AppBaseTheme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cancel" />
+    </LinearLayout>
+
     <Switch
         android:id="@+id/budget_threshold"
         android:layout_width="wrap_content"
@@ -49,8 +71,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:visibility="invisible"
-        >
+        android:visibility="invisible" >
 
         <TextView
             android:layout_width="wrap_content"
@@ -59,7 +80,7 @@
 
         <EditText
             android:id="@+id/budget_per_day"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.14"
             android:inputType="numberDecimal" >
@@ -71,6 +92,28 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/budget_per_day" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/budget_threshold_ll_ll"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:visibility="invisible" >
+
+        <Button
+            android:id="@+id/ok_budget"
+            style="@style/AppBaseTheme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ok" />
+
+        <Button
+            android:id="@+id/cancel_budget"
+            style="@style/AppBaseTheme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cancel" />
     </LinearLayout>
 
 </LinearLayout>

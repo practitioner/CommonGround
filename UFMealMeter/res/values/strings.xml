@@ -14,5 +14,8 @@
     <string name="dollar_sign">$</string>
     <string name="calorie_threshold">Calorie Threshold</string>
     <string name="budget_threshold">Budget Threshold</string>
+    
+    <string name="ok">Ok</string>
+    <string name="cancel">Cancel</string>
 
 </resources>
