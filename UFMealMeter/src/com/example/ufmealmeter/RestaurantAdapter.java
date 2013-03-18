@@ -45,8 +45,8 @@ public class RestaurantAdapter extends BaseAdapter {
     // references to our images
     private Integer[] mThumbIds = {
             R.drawable.pandaexpress, R.drawable.starbucks,
-            R.drawable.pandaexpress, R.drawable.starbucks,
-            R.drawable.pandaexpress, R.drawable.starbucks,
+            R.drawable.burgerking, R.drawable.papajohns,
+            R.drawable.subway, R.drawable.starbucks,
             R.drawable.pandaexpress, R.drawable.starbucks,
             R.drawable.pandaexpress
     };

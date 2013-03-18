@@ -17,7 +17,7 @@ import android.view.MenuItem;
 
 public class FoodItemActivity extends ListActivity {
 
-	String position;
+	int position;
 	FoodItemAdapter adapter;
 	int totalCalories = 0;
 	float totalCarbs = 0;
@@ -31,12 +31,19 @@ public class FoodItemActivity extends ListActivity {
 		setupActionBar();
 
 		// Select position from previous activity and bring that menu here
-		position = this.getIntent().getExtras().getString("position");
+		position = this.getIntent().getExtras().getInt("position");
 
-		adapter = new FoodItemAdapter(this, readPanda());
+		adapter = new FoodItemAdapter(this,
+				readFoodItems(getRestaurantName(position)));
+		
+		setTitle(RestaurantName.actual_display_name[position]);
 
 		setListAdapter(adapter);
 
+	}
+
+	private String getRestaurantName(int position) {
+		return RestaurantName.raw_resource_name[position];
 	}
 
 	/**
@@ -60,9 +67,11 @@ public class FoodItemActivity extends ListActivity {
 	/**
 	 * Populates the Panda menu
 	 * 
+	 * @param restaurantName
+	 * 
 	 * @return
 	 */
-	private ArrayList<FoodItem> readPanda() {
+	private ArrayList<FoodItem> readFoodItems(String restaurantName) {
 		ArrayList<FoodItem> items = new ArrayList<FoodItem>();
 		try {
 			String foodName = null;
@@ -73,7 +82,8 @@ public class FoodItemActivity extends ListActivity {
 
 			FoodItem fd;
 			InputStream inputStream = getResources().openRawResource(
-					R.raw.panda);
+					getResources().getIdentifier(restaurantName, null,
+							this.getPackageName()));
 			BufferedReader in = new BufferedReader(new InputStreamReader(
 					inputStream));
 			String fileData = null;
