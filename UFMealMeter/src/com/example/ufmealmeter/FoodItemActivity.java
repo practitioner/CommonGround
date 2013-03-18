@@ -10,10 +10,12 @@ import java.util.StringTokenizer;
 
 import android.app.ListActivity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 
 public class FoodItemActivity extends ListActivity {
 
@@ -22,11 +24,11 @@ public class FoodItemActivity extends ListActivity {
 	int totalCalories = 0;
 	float totalCarbs = 0;
 	float totalFat = 0;
+	public final String PREF_NAME = "threshold";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
 		// Show the Up button in the action bar.
 		setupActionBar();
 
@@ -137,10 +139,12 @@ public class FoodItemActivity extends ListActivity {
 		case R.id.menu_go:
 			Intent intent = new Intent(FoodItemActivity.this,
 					CaloriesSummaryActivity.class);
-			intent.putStringArrayListExtra("foodNames", calculateSummary());
+			intent.putStringArrayListExtra("foodNames", getSummary());
 			intent.putExtra("totalCal", totalCalories);
 			intent.putExtra("totalCarbs", totalCarbs);
 			intent.putExtra("totalFat", totalFat);
+			intent.putExtra("calBalance", getCalorieBalance());
+			intent.putExtra("budgetBalance", getBudgetBalance());
 			intent.putExtra("position", position);
 			startActivity(intent);
 			return true;
@@ -148,16 +152,42 @@ public class FoodItemActivity extends ListActivity {
 		return super.onOptionsItemSelected(item);
 	}
 
-	private ArrayList<String> calculateSummary() {
+	private ArrayList<String> getSummary() {
 		ArrayList<String> selFoodString = new ArrayList<String>();
 		for (FoodItem fd : adapter.getSelectedFoodItemList()) {
 			selFoodString.add(fd.foodName);
 			totalCalories = totalCalories + fd.calories;
 			totalCarbs = totalCarbs + fd.totalCarbs;
 			totalFat = totalFat + fd.totalFat;
+			
 		}
 
 		return selFoodString;
 	}
+	
+	private float getCalorieBalance() {
+		float balance_cal = 0;
+		SharedPreferences pref = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
+		if(pref.contains("cal_balance")){
+			balance_cal = pref.getFloat("cal_balance", 0) - totalCalories;
+		}else{
+			balance_cal = (float)0 - totalCalories;
+		}
+		return balance_cal;
+	}
+	
+	private float getBudgetBalance() {
+		float balance_budget = 0;
+		SharedPreferences pref = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
+		if(pref.contains("budget_balance")){
+			balance_budget = pref.getFloat("budget_balance", 0);
+		}else{
+			balance_budget = 0;
+		}
+		return balance_budget;
+	}
+	
+
+	
 
 }

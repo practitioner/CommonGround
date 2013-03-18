@@ -23,15 +23,15 @@
         <ListView
             android:id="@+id/selected_fooditem"
             android:layout_width="match_parent"
-            android:layout_height="248dp"
+            android:layout_height="200dp"
             android:drawSelectorOnTop="false"
             android:orientation="vertical" />
 
         <TextView
             android:id="@+id/total_calories"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" 
-            android:textIsSelectable="true"/>
+            android:layout_height="wrap_content"
+            android:textIsSelectable="true" />
 
         <TextView
             android:id="@+id/total_carbs"
@@ -42,10 +42,42 @@
         <TextView
             android:id="@+id/total_fat"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" 
-            android:textIsSelectable="true"/>
+            android:layout_height="wrap_content"
+            android:textIsSelectable="true" />
 
-      
+        <!--
+             <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            tools:ignore="UselessParent" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/dollar_sign" />
+
+            <EditText
+                android:id="@+id/price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.89"
+                android:inputType="numberDecimal" >
+            </EditText>
+        </LinearLayout>
+        -->
+
+        <TextView
+            android:id="@+id/remaining_calories"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textIsSelectable="true" />
+
+        <TextView
+            android:id="@+id/remaining_budget"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textIsSelectable="true" />
     </LinearLayout>
 
 </LinearLayout>

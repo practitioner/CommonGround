@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -90,7 +89,7 @@ public class UserInfoActivity extends Activity {
 		}
 		
 		EditText budget_thres = (EditText) findViewById(R.id.budget_per_day);
-		if(pref.contains("cal_threshold")){
+		if(pref.contains("budget_threshold")){
 			budget_thres.setText(String.valueOf(pref.getFloat("budget_threshold", 0))); 
 		}else{
 			budget_thres.setText(String.valueOf(0)); 
@@ -138,6 +137,9 @@ public class UserInfoActivity extends Activity {
 		editor.putFloat("cal_threshold",
 				Float.parseFloat(cal_thres.getText().toString()));
 		editor.commit();
+		editor.putFloat("cal_balance",
+				Float.parseFloat(cal_thres.getText().toString()));
+		editor.commit();
 		Toast.makeText(UserInfoActivity.this, "Calorie Threshold saved!",
 				Toast.LENGTH_SHORT).show();
 		
@@ -164,6 +166,9 @@ public class UserInfoActivity extends Activity {
 	//	SharedPreferences.Editor editor = getPreferences(MODE_PRIVATE).edit();
 		EditText budget_thres = (EditText) findViewById(R.id.budget_per_day);
 		editor.putFloat("budget_threshold",
+				Float.parseFloat(budget_thres.getText().toString()));
+		editor.commit();
+		editor.putFloat("budget_balance",
 				Float.parseFloat(budget_thres.getText().toString()));
 		editor.commit();
 		Toast.makeText(UserInfoActivity.this, "Budget Threshold saved!",

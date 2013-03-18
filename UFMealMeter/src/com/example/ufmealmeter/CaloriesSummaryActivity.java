@@ -21,6 +21,8 @@ public class CaloriesSummaryActivity extends Activity {
 	int totalCalories = 0;
 	float totalCarbs = 0;
 	float totalFat = 0;
+	float remainingCalories = 0;
+	float budgetBalance = 0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -35,21 +37,32 @@ public class CaloriesSummaryActivity extends Activity {
 		totalCalories = this.getIntent().getExtras().getInt("totalCal");
 		totalCarbs = this.getIntent().getExtras().getFloat("totalCarbs");
 		totalFat = this.getIntent().getExtras().getFloat("totalFat");
+		remainingCalories = this.getIntent().getExtras().getFloat("calBalance");
+		budgetBalance = this.getIntent().getExtras().getFloat("budgetBalance");
 		ArrayList<String> selectedFoodItems = this.getIntent().getExtras()
 				.getStringArrayList("foodNames");
-		
-		FoodNameAdapter adapter = new FoodNameAdapter(getApplicationContext(), selectedFoodItems);
+
+		FoodNameAdapter adapter = new FoodNameAdapter(getApplicationContext(),
+				selectedFoodItems);
 		ListView food_list = (ListView) findViewById(R.id.selected_fooditem);
 		food_list.setAdapter(adapter);
-		
+
 		TextView cal = (TextView) findViewById(R.id.total_calories);
 		cal.setText("Total Calories : " + String.valueOf(totalCalories) + "\n");
-		
+
 		TextView carbs = (TextView) findViewById(R.id.total_carbs);
 		carbs.setText("Total Carbs : " + String.valueOf(totalCarbs) + "\n");
-		
+
 		TextView fat = (TextView) findViewById(R.id.total_fat);
 		fat.setText("Total Fat : " + String.valueOf(totalFat) + "\n");
+
+		TextView remaining_calories = (TextView) findViewById(R.id.remaining_calories);
+		remaining_calories.setText("Remaining Calories : "
+				+ String.valueOf(remainingCalories) + "\n");
+
+		TextView remaining_budget = (TextView) findViewById(R.id.remaining_budget);
+		remaining_budget.setText("Remaining Budget (Excluding this meal: "
+				+ String.valueOf(budgetBalance) + "\n");
 	}
 
 	/**
