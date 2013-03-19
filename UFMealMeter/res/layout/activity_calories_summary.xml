@@ -20,12 +20,52 @@
             android:layout_height="37dp"
             android:text="@string/meal_summary" />
 
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="1dip"
+            android:background="#000000" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            tools:ignore="UselessParent" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/add_your_price_here" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/dollar_sign" />
+
+            <EditText
+                android:id="@+id/price"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.89"
+                android:inputType="numberDecimal" >
+            </EditText>
+        </LinearLayout>
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="1dip"
+            android:background="#000000" />
+
         <ListView
             android:id="@+id/selected_fooditem"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="wrap_content"
             android:drawSelectorOnTop="false"
             android:orientation="vertical" />
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="1dip"
+            android:background="#000000" />
 
         <TextView
             android:id="@+id/total_calories"
@@ -45,27 +85,10 @@
             android:layout_height="wrap_content"
             android:textIsSelectable="true" />
 
-        <!--
-             <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            tools:ignore="UselessParent" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/dollar_sign" />
-
-            <EditText
-                android:id="@+id/price"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.89"
-                android:inputType="numberDecimal" >
-            </EditText>
-        </LinearLayout>
-        -->
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="1dip"
+            android:background="#000000" />
 
         <TextView
             android:id="@+id/remaining_calories"
@@ -78,6 +101,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textIsSelectable="true" />
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="1dip"
+            android:background="#000000" />
     </LinearLayout>
 
 </LinearLayout>

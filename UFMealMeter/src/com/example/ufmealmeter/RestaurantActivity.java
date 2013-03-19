@@ -43,14 +43,25 @@ public class RestaurantActivity extends Activity {
 				getActions());
 		ListView action_list = (ListView) findViewById(R.id.action_list);
 		action_list.setAdapter(adapter);
-		
+
 		action_list.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View v,
 					int position, long id) {
-				Intent intent = new Intent(RestaurantActivity.this,
-						UserInfoActivity.class);
-				intent.putExtra("position", position);
-				startActivity(intent);
+				System.out.println("position" + position);
+				System.out.println("id : " + id);
+				if (position == 0) {
+
+					Intent intent = new Intent(RestaurantActivity.this,
+							ViewHistoryActivity.class);
+					intent.putExtra("position", position);
+					startActivity(intent);
+				} else if (position == 1) {
+
+					Intent intent = new Intent(RestaurantActivity.this,
+							UserInfoActivity.class);
+					intent.putExtra("position", position);
+					startActivity(intent);
+				}
 			}
 		});
 

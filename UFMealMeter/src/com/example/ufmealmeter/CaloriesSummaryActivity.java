@@ -1,17 +1,18 @@
 package com.example.ufmealmeter;
 
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
-import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -23,6 +24,8 @@ public class CaloriesSummaryActivity extends Activity {
 	float totalFat = 0;
 	float remainingCalories = 0;
 	float budgetBalance = 0;
+	public final String PREF_NAME = "threshold";
+	public final String userHistory = "history.txt";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +64,7 @@ public class CaloriesSummaryActivity extends Activity {
 				+ String.valueOf(remainingCalories) + "\n");
 
 		TextView remaining_budget = (TextView) findViewById(R.id.remaining_budget);
-		remaining_budget.setText("Remaining Budget (Excluding this meal: "
+		remaining_budget.setText("Remaining Budget (Excluding this meal): "
 				+ String.valueOf(budgetBalance) + "\n");
 	}
 
@@ -89,8 +92,33 @@ public class CaloriesSummaryActivity extends Activity {
 			intent.putExtra("position", position);
 			NavUtils.navigateUpTo(this, intent);
 			return true;
+		case R.id.menu_save:
+			Intent intent1 = new Intent(CaloriesSummaryActivity.this,
+					RestaurantActivity.class);
+			writeToFile();
+			startActivity(intent1);
+			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	private void writeToFile() {
+		try {
+			OutputStreamWriter outputStreamWriter = new OutputStreamWriter(
+					openFileOutput(userHistory, Context.MODE_PRIVATE | Context.MODE_APPEND));
+			outputStreamWriter.write("saumya is mad");
+			outputStreamWriter.close();
+		} catch (IOException e) {
+
+		}
+
+	}
+
+	private String getTodaysFilename() {
+		SimpleDateFormat formatter = new SimpleDateFormat("EEE, dd MMM yyyy");
+		Date now = new Date();
+		return formatter.format(now);
+
 	}
 
 }
