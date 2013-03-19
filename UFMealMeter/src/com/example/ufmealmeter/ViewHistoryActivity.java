@@ -42,6 +42,7 @@ public class ViewHistoryActivity extends Activity {
 				inputStream.close();
 
 				ret = stringBuilder.toString();
+				System.out.println("ret : " + ret);
 
 			}
 

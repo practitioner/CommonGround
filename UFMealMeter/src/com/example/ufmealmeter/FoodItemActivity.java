@@ -15,7 +15,6 @@ import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.EditText;
 
 public class FoodItemActivity extends ListActivity {
 
@@ -24,6 +23,7 @@ public class FoodItemActivity extends ListActivity {
 	int totalCalories = 0;
 	float totalCarbs = 0;
 	float totalFat = 0;
+	ArrayList<String> indvCal = new ArrayList<String>();
 	public final String PREF_NAME = "threshold";
 
 	@Override
@@ -37,7 +37,7 @@ public class FoodItemActivity extends ListActivity {
 
 		adapter = new FoodItemAdapter(this,
 				readFoodItems(getRestaurantName(position)));
-		
+
 		setTitle(RestaurantName.actual_display_name[position]);
 
 		setListAdapter(adapter);
@@ -63,7 +63,6 @@ public class FoodItemActivity extends ListActivity {
 			System.out.println(fd.get(i).toString());
 
 		}
-
 	}
 
 	/**
@@ -145,6 +144,7 @@ public class FoodItemActivity extends ListActivity {
 			intent.putExtra("totalFat", totalFat);
 			intent.putExtra("calBalance", getCalorieBalance());
 			intent.putExtra("budgetBalance", getBudgetBalance());
+			intent.putStringArrayListExtra("indvCalorie", indvCal);
 			intent.putExtra("position", position);
 			startActivity(intent);
 			return true;
@@ -159,35 +159,32 @@ public class FoodItemActivity extends ListActivity {
 			totalCalories = totalCalories + fd.calories;
 			totalCarbs = totalCarbs + fd.totalCarbs;
 			totalFat = totalFat + fd.totalFat;
-			
+			indvCal.add(String.valueOf(fd.calories));
 		}
 
 		return selFoodString;
 	}
-	
+
 	private float getCalorieBalance() {
 		float balance_cal = 0;
 		SharedPreferences pref = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
-		if(pref.contains("cal_balance")){
+		if (pref.contains("cal_balance")) {
 			balance_cal = pref.getFloat("cal_balance", 0) - totalCalories;
-		}else{
-			balance_cal = (float)0 - totalCalories;
+		} else {
+			balance_cal = (float) 0 - totalCalories;
 		}
 		return balance_cal;
 	}
-	
+
 	private float getBudgetBalance() {
 		float balance_budget = 0;
 		SharedPreferences pref = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
-		if(pref.contains("budget_balance")){
+		if (pref.contains("budget_balance")) {
 			balance_budget = pref.getFloat("budget_balance", 0);
-		}else{
+		} else {
 			balance_budget = 0;
 		}
 		return balance_budget;
 	}
-	
-
-	
 
 }
