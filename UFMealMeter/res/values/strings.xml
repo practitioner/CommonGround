@@ -19,6 +19,6 @@
     <string name="cancel">Cancel</string>
     <string name="add_your_price_here">Add your meal price here : </string>
     <string name="you_selected_these_items">You selected these items : </string>
-    <string name="title_activity_view_history">ViewHistory</string>
+    <string name="title_activity_view_history">Your History</string>
 
 </resources>

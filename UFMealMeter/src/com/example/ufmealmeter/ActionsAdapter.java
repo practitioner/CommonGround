@@ -20,11 +20,9 @@ public class ActionsAdapter extends ArrayAdapter<String> {
 		this.actions = actions;
 	}
 
-
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
-		LayoutInflater inflater = (LayoutInflater) context
-				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		String action_name = actions.get(position);
 
 		View tweetView = inflater.inflate(R.layout.activity_indv_actions, parent, false);

@@ -35,8 +35,7 @@ public class FoodItemActivity extends ListActivity {
 		// Select position from previous activity and bring that menu here
 		position = this.getIntent().getExtras().getInt("position");
 
-		adapter = new FoodItemAdapter(this,
-				readFoodItems(getRestaurantName(position)));
+		adapter = new FoodItemAdapter(this, readFoodItems(getRestaurantName(position)));
 
 		setTitle(RestaurantName.actual_display_name[position]);
 
@@ -82,11 +81,8 @@ public class FoodItemActivity extends ListActivity {
 			int totalCarbs = 0;
 
 			FoodItem fd;
-			InputStream inputStream = getResources().openRawResource(
-					getResources().getIdentifier(restaurantName, null,
-							this.getPackageName()));
-			BufferedReader in = new BufferedReader(new InputStreamReader(
-					inputStream));
+			InputStream inputStream = getResources().openRawResource(getResources().getIdentifier(restaurantName, null, this.getPackageName()));
+			BufferedReader in = new BufferedReader(new InputStreamReader(inputStream));
 			String fileData = null;
 			while ((fileData = in.readLine()) != null) {
 				foodName = fileData;
@@ -96,17 +92,13 @@ public class FoodItemActivity extends ListActivity {
 				if ((fileData = in.readLine()) != null) {
 					StringTokenizer line = new StringTokenizer(fileData);
 					if (line.hasMoreTokens()) {
-						calories = Integer
-								.parseInt((String) line.nextElement());
-						totalFat = Float
-								.parseFloat((String) line.nextElement());
-						totalCarbs = Integer.parseInt((String) line
-								.nextElement());
+						calories = Integer.parseInt((String) line.nextElement());
+						totalFat = Float.parseFloat((String) line.nextElement());
+						totalCarbs = Integer.parseInt((String) line.nextElement());
 					}
 				}
 
-				fd = new FoodItem(foodName, calories, servingSize, totalFat,
-						totalCarbs);
+				fd = new FoodItem(foodName, calories, servingSize, totalFat, totalCarbs);
 				items.add(fd);
 
 			}
@@ -136,8 +128,7 @@ public class FoodItemActivity extends ListActivity {
 			NavUtils.navigateUpFromSameTask(this);
 			return true;
 		case R.id.menu_go:
-			Intent intent = new Intent(FoodItemActivity.this,
-					CaloriesSummaryActivity.class);
+			Intent intent = new Intent(FoodItemActivity.this, CaloriesSummaryActivity.class);
 			intent.putStringArrayListExtra("foodNames", getSummary());
 			intent.putExtra("totalCal", totalCalories);
 			intent.putExtra("totalCarbs", totalCarbs);

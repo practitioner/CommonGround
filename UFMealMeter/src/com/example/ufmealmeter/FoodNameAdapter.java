@@ -20,11 +20,9 @@ public class FoodNameAdapter extends ArrayAdapter<String> {
 		this.StringList = itemsList;
 	}
 
-
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
-		LayoutInflater inflater = (LayoutInflater) context
-				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		String String = StringList.get(position);
 
 		View tweetView = inflater.inflate(R.layout.activity_indv_sel_fooditem, parent, false);

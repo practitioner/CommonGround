@@ -31,17 +31,16 @@ public class FoodItemAdapter extends ArrayAdapter<FoodItem> {
 
 	public List<FoodItem> getSelectedFoodItemList() {
 		List<FoodItem> selfoodItemList = new ArrayList<FoodItem>();
-		int i=0;
-		while(i<foodItemList.size()){
-			if(this.foodItemSelected.get(i)){
+		int i = 0;
+		while (i < foodItemList.size()) {
+			if (this.foodItemSelected.get(i)) {
 				selfoodItemList.add(foodItemList.get(i));
 			}
 			i++;
 		}
 		return selfoodItemList;
 	}
-	
-	
+
 	public SparseBooleanArray getFoodItemSelected() {
 		return foodItemSelected;
 	}
@@ -50,20 +49,16 @@ public class FoodItemAdapter extends ArrayAdapter<FoodItem> {
 		return foodItemList;
 	}
 
-	
-
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
-		LayoutInflater inflater = (LayoutInflater) context
-				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		FoodItem foodItem = foodItemList.get(position);
 
 		View tweetView = inflater.inflate(R.layout.activity_indv_fooditem, parent, false);
 		TextView textView = (TextView) tweetView.findViewById(R.id.text);
 		textView.setText(foodItem.toString());
 
-		final CheckBox cb = (CheckBox) tweetView
-				.findViewById(R.id.selectfooditem);
+		final CheckBox cb = (CheckBox) tweetView.findViewById(R.id.selectfooditem);
 		cb.setOnClickListener(new OnClickListener() {
 
 			public void onClick(View v) {
@@ -77,7 +72,7 @@ public class FoodItemAdapter extends ArrayAdapter<FoodItem> {
 				}
 			}
 		});
-		
+
 		cb.setChecked(foodItemSelected.get(position));
 		return tweetView;
 
