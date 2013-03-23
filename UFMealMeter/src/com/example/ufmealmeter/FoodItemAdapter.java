@@ -2,8 +2,10 @@ package com.example.ufmealmeter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -78,4 +80,40 @@ public class FoodItemAdapter extends ArrayAdapter<FoodItem> {
 
 	}
 
+	public void changeOrderForSuggestAMeal() {
+		List<Integer> indexesOfSuggestibleFoodItems = new ArrayList<Integer>();
+
+		for (int i = 0; i < foodItemList.size(); i++) {
+			FoodItem foodItem = (FoodItem) foodItemList.get(i);
+			if (foodItem.getCalories() < FoodItemUtils.determineCalorieLimitToSuggestMeal(context)) {
+				indexesOfSuggestibleFoodItems.add(i);
+			}
+		}
+
+		int low = 0;
+		int high = indexesOfSuggestibleFoodItems.size();
+
+		Random randomNumber = new Random();
+		List<FoodItem> foodItemsToSuggest = new ArrayList<FoodItem>();
+
+		for (int i = 0; i < Constants.numberOfsuggestedFoodItems; i++) {
+			int randomNumberForSelectingFoodItems = randomNumber.nextInt(high - low) + low;
+			int indexOfItemToRetreive = indexesOfSuggestibleFoodItems.get(randomNumberForSelectingFoodItems);
+			FoodItem foodItem = (FoodItem) foodItemList.get(indexOfItemToRetreive);
+			foodItemsToSuggest.add(foodItem);
+		}
+
+		// remove from list
+		for (int i = 0; i < foodItemsToSuggest.size(); i++) {
+			foodItemList.remove(foodItemsToSuggest.get(i));
+		}
+
+		// put back at front of list
+		for (int i = 0; i < foodItemsToSuggest.size(); i++) {
+			foodItemList.add(0, foodItemList.get(i));
+		}
+		
+		//notify adapter
+		this.notifyDataSetChanged();
+	}
 }

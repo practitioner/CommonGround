@@ -15,10 +15,11 @@
     <string name="dollar_sign">$</string>
     <string name="calorie_threshold">Calorie Threshold</string>
     <string name="budget_threshold">Budget Threshold</string>
-    <string name="ok">Ok</string>
+    <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="add_your_price_here">Add your meal price here : </string>
     <string name="you_selected_these_items">You selected these items : </string>
     <string name="title_activity_view_history">Your History</string>
+    <string name="suggest_a_meal">Want us to suggest a meal?</string>
 
 </resources>

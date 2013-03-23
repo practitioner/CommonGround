@@ -6,6 +6,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
 import java.util.StringTokenizer;
 
 import android.app.ListActivity;
@@ -13,8 +17,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
+import android.text.GetChars;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.TextView;
 
 public class FoodItemActivity extends ListActivity {
 
@@ -25,7 +33,7 @@ public class FoodItemActivity extends ListActivity {
 	float totalFat = 0;
 	ArrayList<String> indvCal = new ArrayList<String>();
 	public final String PREF_NAME = "threshold";
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -35,11 +43,34 @@ public class FoodItemActivity extends ListActivity {
 		// Select position from previous activity and bring that menu here
 		position = this.getIntent().getExtras().getInt("position");
 
-		adapter = new FoodItemAdapter(this, readFoodItems(getRestaurantName(position)));
+		final List<FoodItem> foodItemsOfThisRestaurant=readFoodItems(getRestaurantName(position));
+		
+		adapter = new FoodItemAdapter(this, foodItemsOfThisRestaurant);
 
 		setTitle(RestaurantName.actual_display_name[position]);
 
 		setListAdapter(adapter);
+		
+		//Add TextView for suggest a meal
+		TextView suggestAMealTextView=(TextView)findViewById(R.id.suggestAMealTextView);
+		
+		//set on click listener
+		suggestAMealTextView.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				
+				//activate some text view showing rationale behind selecting food items
+				
+				
+				//reorder list based on meal suggestion principles
+				adapter.changeOrderForSuggestAMeal();
+				
+				
+			}
+		});
+		//--on click listener ends
 
 	}
 
@@ -177,5 +208,43 @@ public class FoodItemActivity extends ListActivity {
 		}
 		return balance_budget;
 	}
-
+	
+	/*
+	public List<FoodItem> reorderFoodItemListToSuggestAMeal(List<FoodItem> foodItemList){
+		
+		List<Integer> indexesOfSuggestibleFoodItems=new ArrayList<Integer>();
+		
+		for(int i=0;i<foodItemList.size();i++){
+			FoodItem foodItem=(FoodItem)foodItemList.get(i);
+			if(foodItem.getCalories()<mealSuggestionCalorieThreshold){
+				indexesOfSuggestibleFoodItems.add(i);
+			}
+		}
+		
+		int low=0;
+		int high=indexesOfSuggestibleFoodItems.size();
+		
+		Random randomNumber=new Random();
+		List<FoodItem> foodItemsToSuggest=new ArrayList<FoodItem>();
+		
+		for(int i=0;i<numberOfsuggestedFoodItems;i++){
+			int randomNumberForSelectingFoodItems=randomNumber.nextInt(high-low)+low;
+			int indexOfItemToRetreive=indexesOfSuggestibleFoodItems.get(randomNumberForSelectingFoodItems);
+			FoodItem foodItem=(FoodItem)foodItemList.get(indexOfItemToRetreive);
+			foodItemsToSuggest.add(foodItem);
+		}
+		
+		//remove from list
+		for(int i=0;i<foodItemsToSuggest.size();i++){
+			foodItemList.remove(foodItemsToSuggest.get(i));
+		}
+			
+		//put back at front of list
+		for(int i=0;i<foodItemsToSuggest.size();i++){
+			foodItemList.add(0, foodItemList.get(i));
+		}
+		
+		return foodItemList;
+	}
+*/
 }

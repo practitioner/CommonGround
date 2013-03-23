@@ -18,6 +18,47 @@ public class FoodItem {
 		totalFat = totFat;
 		totalCarbs = totCarbs;
 	}
+	
+	public String getFoodName() {
+		return foodName;
+	}
+
+	public void setFoodName(String foodName) {
+		this.foodName = foodName;
+	}
+
+	public int getCalories() {
+		return calories;
+	}
+
+	public void setCalories(int calories) {
+		this.calories = calories;
+	}
+
+	public String getServingSize() {
+		return servingSize;
+	}
+
+	public void setServingSize(String servingSize) {
+		this.servingSize = servingSize;
+	}
+
+	public float getTotalFat() {
+		return totalFat;
+	}
+
+	public void setTotalFat(float totalFat) {
+		this.totalFat = totalFat;
+	}
+
+	public int getTotalCarbs() {
+		return totalCarbs;
+	}
+
+	public void setTotalCarbs(int totalCarbs) {
+		this.totalCarbs = totalCarbs;
+	}
+
 
 	@Override
 	public String toString() {
