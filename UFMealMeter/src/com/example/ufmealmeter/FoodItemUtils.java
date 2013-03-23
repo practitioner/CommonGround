@@ -14,7 +14,7 @@ public class FoodItemUtils {
 		// about then display message and use 400
 		// else keep limit as 400 or any such set value
 		// should actually be according to time of day
-		
+		int manasi = 0;
 		final String PREF_NAME = "threshold";
 		float calorieBalance = 0;
 		SharedPreferences pref =  context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
