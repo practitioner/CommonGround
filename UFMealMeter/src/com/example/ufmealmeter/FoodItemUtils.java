@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 
 public class FoodItemUtils {
 
+	int sumeet=0;
 	public static float determineCalorieLimitToSuggestMeal(Context context) {
 		// if calorie threshold is set check balance remaining
 		// if balance is less than 400 or a particular value then keep limit as
