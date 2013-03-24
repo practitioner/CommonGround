@@ -54,7 +54,7 @@ public class FoodItemActivity extends ListActivity {
 
 		setListAdapter(adapter);
 		
-		/*//Add TextView for suggest a meal
+		//Add TextView for suggest a meal
 		TextView suggestAMealTextView=(TextView)findViewById(R.id.suggestAMealTextView);
 		final TextView suggestAMealExplainationTextView=(TextView)findViewById(R.id.suggestAMealExplainationTextView);
 		final TextView suggestAMealSuggestAgainTextView=(TextView)findViewById(R.id.suggestAMealSuggestAgainTextView);
@@ -94,7 +94,7 @@ public class FoodItemActivity extends ListActivity {
 					}
 				}
 			}
-		});*/
+		});
 		//--on click listener ends
 		
 		suggestAMealSuggestAgainTextView.setOnClickListener(new OnClickListener() {
@@ -110,7 +110,7 @@ public class FoodItemActivity extends ListActivity {
 					adapter.stopMealSuggestionAndClearBackgroundColor();
 				}
 			}
-		});*/
+		});
 		
 		
 	}
