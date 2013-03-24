@@ -1,39 +1,5 @@
-<<<<<<< HEAD
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
 
-    <string name="app_name">UFMealMeter</string>
-    <string name="action_settings">Settings</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="action_go">Go</string>
-    <string name="action_save">Save</string>
-    <string name="select_food_item">Select Food!</string>
-    <string name="title_activity_calories_summary"></string>
-    <string name="meal_summary">Your meal summary!</string>
-    <string name="title_activity_user_info">UserInfo</string>
-    <string name="calories_per_day">calories/day</string>
-    <string name="budget_per_day">per day</string>
-    <string name="dollar_sign">$</string>
-    <string name="calorie_threshold">Calorie Threshold</string>
-    <string name="budget_threshold">Budget Threshold</string>
-    <string name="ok">OK</string>
-    <string name="cancel">Cancel</string>
-    <string name="add_your_price_here">Add your meal price here : </string>
-    <string name="you_selected_these_items">You selected these items : </string>
-    <string name="title_activity_view_history">Your History</string>
-    <string name="suggest_a_meal">Want us to suggest a meal?</string>
-    <string name="suggest_a_meal_explaination">Suggestions are based on your calorie balance and calorie limit
-    If you haven`t set your calorie limit,the default calorie limit for suggestion is set to 220 calories
-    We suggest three food items from the menu at a time,all which are highlighted in <i>BLUE</i>
-   	</string>
-    <string name="suggest_a_meal_suggest_again">Suggest Again</string>
-    <string name="suggest_a_meal_error">We have no suggestions for you at this time.
-    This may be because there are no food items that are below you required calorie balance
-    </string>
-    
 
-=======
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
     <string name="app_name">UFMealMeter</string>
@@ -58,6 +24,14 @@
     <string name="suggest_a_meal">Want us to suggest a meal?</string>
     <string name="title_activity_view_history_indv_food"></string>
     <string name="go">Go</string>
+    <string name="suggest_a_meal_explaination">Suggestions are based on your calorie balance and calorie limit
+    If you haven`t set your calorie limit,the default calorie limit for suggestion is set to 220 calories
+    We suggest three food items from the menu at a time,all which are highlighted in <i>BLUE</i>
+   	</string>
+    <string name="suggest_a_meal_suggest_again">Suggest Again</string>
+    <string name="suggest_a_meal_error">We have no suggestions for you at this time.
+    This may be because there are no food items that are below you required calorie balance
+    </string>
+    
 
->>>>>>> branch 'master' of https://github.com/practitioner/CommonGround.git
 </resources>
