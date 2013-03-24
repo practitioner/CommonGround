@@ -6,10 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Random;
 import java.util.StringTokenizer;
 
 import android.app.ListActivity;
@@ -17,11 +14,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
-import android.text.GetChars;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class FoodItemActivity extends ListActivity {
@@ -61,8 +59,17 @@ public class FoodItemActivity extends ListActivity {
 		suggestAMealSuggestAgainTextView.setTextColor(getResources().getColor(android.R.color.holo_orange_dark));
 		suggestAMealExplainationTextView.setVisibility(View.INVISIBLE);
 		suggestAMealSuggestAgainTextView.setVisibility(View.INVISIBLE);
-		//RelativeLayout.LayoutParams layoutParams=new RelativeLayout.La
-		//ListView foodItemsListView=(ListView)findViewById(android.R.id.list);
+		
+		
+		final RelativeLayout.LayoutParams layoutParamsSuggestOn=new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,RelativeLayout.LayoutParams.WRAP_CONTENT);
+		layoutParamsSuggestOn.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+		layoutParamsSuggestOn.addRule(RelativeLayout.BELOW, R.id.suggestAMealSuggestAgainTextView);
+		final RelativeLayout.LayoutParams layoutParamsSuggestOff=new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,RelativeLayout.LayoutParams.WRAP_CONTENT);
+		layoutParamsSuggestOff.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+		layoutParamsSuggestOff.addRule(RelativeLayout.BELOW, R.id.suggestAMealTextView);
+		
+		final ListView foodItemsListView=(ListView)findViewById(android.R.id.list);
+		foodItemsListView.setLayoutParams(layoutParamsSuggestOff);
 		//set on click listener
 		suggestAMealTextView.setOnClickListener(new OnClickListener() {
 			
@@ -79,12 +86,15 @@ public class FoodItemActivity extends ListActivity {
 					isMealSuggestionOn=false;
 					suggestAMealExplainationTextView.setVisibility(View.INVISIBLE);
 					suggestAMealSuggestAgainTextView.setVisibility(View.INVISIBLE);
+					foodItemsListView.setLayoutParams(layoutParamsSuggestOff);
 					//set layout params for 
 					
 				} else {
 					isMealSuggestionOn=true;
+					
 					suggestAMealExplainationTextView.setVisibility(View.VISIBLE);
 					suggestAMealSuggestAgainTextView.setVisibility(View.VISIBLE);
+					foodItemsListView.setLayoutParams(layoutParamsSuggestOn);
 					boolean reorderSuccessful=adapter.changeOrderForSuggestAMeal();
 					if(!reorderSuccessful){
 						suggestAMealExplainationTextView.setText(R.string.suggest_a_meal_error);
