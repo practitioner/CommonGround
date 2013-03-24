@@ -8,8 +8,13 @@ import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.StringTokenizer;
+import java.util.TreeMap;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -22,7 +27,8 @@ import android.widget.ListView;
 public class ViewHistoryActivity extends Activity {
 	public final String userHistory = "history.txt";
 	ArrayList<FoodHistoryItem> items = new ArrayList<FoodHistoryItem>();
-	
+	Map<Date, FoodHistoryItem> dateMap = new HashMap<Date, FoodHistoryItem>();
+	String delimiter = ":";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -46,11 +52,9 @@ public class ViewHistoryActivity extends Activity {
 		Date logDate = null;
 		String totalCalories = null;
 		String totalPrice = null;
-		
-		/*
-		 * ArrayList<String> foodItemNames = new ArrayList<String>();
-		 * ArrayList<Float> calories = new ArrayList<Float>();
-		 */
+		HashMap<String, String> itemCal = new HashMap<String, String>();
+		String itemName = null, itemPrice = null;
+
 		InputStream inputStream = null;
 		try {
 			inputStream = openFileInput(userHistory);
@@ -61,23 +65,37 @@ public class ViewHistoryActivity extends Activity {
 				String line = "";
 				int count = 0;
 				while ((line = bufferedReader.readLine()) != null) {
-					if(count > 0){
-						// processing
-						count++;
-						if(isEndOfRecord(line)){
-							fd = new FoodHistoryItem(logDate, totalCalories, totalPrice, null, null);
-							items.add(fd);
+					if (count > 0) {
+						if (isEndOfRecord(line)) {
+							fd = new FoodHistoryItem(logDate, totalCalories, totalPrice, itemCal);
+							// items.add(fd);
+							consolidateDate(logDate, fd);
 							count = 0;
 							line = line.substring(1);
+						} else {
+							// processing
+							StringTokenizer tokens = new StringTokenizer(line, delimiter);
+							if (tokens.hasMoreTokens()) {
+								itemName = (String) tokens.nextElement();
+							}
+							if (tokens.hasMoreTokens()) {
+								itemPrice = (String) tokens.nextElement();
+							}
+							if (null != itemName && null != itemPrice) {
+								itemCal.put(itemName, itemPrice);
+								itemName = null;
+								itemPrice = null;
+								count++;
+							}
 						}
+
 					}
 					if (count == 0 && !"".equalsIgnoreCase(line) && !isEndOfRecord(line)) {
-					StringTokenizer tokens = new StringTokenizer(line, ",");
-					
-						StringBuilder date = new StringBuilder();
+						StringTokenizer tokens = new StringTokenizer(line, delimiter);
+
 						if (tokens.hasMoreTokens()) {
-							date.append((String) tokens.nextElement()).append((String) tokens.nextElement());
-							logDate = getDate(date.toString().trim());
+							String date = tokens.nextElement().toString();
+							logDate = getDate(date);
 						}
 						if (tokens.hasMoreTokens()) {
 							totalCalories = (String) tokens.nextElement();
@@ -87,12 +105,12 @@ public class ViewHistoryActivity extends Activity {
 						}
 						count++;
 					}
-					
-					
-					
+
 				}
 
 			}
+
+			populateItems();
 
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -109,6 +127,35 @@ public class ViewHistoryActivity extends Activity {
 			return items;
 		}
 
+	}
+
+	private void populateItems() {
+		Map<Date, FoodHistoryItem> sortedDateMap = new TreeMap<Date, FoodHistoryItem>(dateMap);
+		for (Date key : ((TreeMap<Date, FoodHistoryItem>) sortedDateMap).descendingKeySet()) {
+			items.add(sortedDateMap.get(key));
+		}
+	}
+
+	@SuppressWarnings("rawtypes")
+	private void consolidateDate(Date logDate, FoodHistoryItem fd) {
+		if (dateMap.containsKey(logDate)) {
+			FoodHistoryItem fd_old = dateMap.get(logDate);
+			int cal = Integer.parseInt(fd_old.totalCalories);
+			cal += Integer.parseInt(fd.totalCalories);
+			fd_old.totalCalories = String.valueOf(cal);
+			float price = Float.parseFloat(fd_old.totalPrice);
+			price += Float.parseFloat(fd.totalPrice);
+			fd_old.totalPrice = String.valueOf(price);
+
+			Iterator<Entry<String, String>> it = fd.itemCal.entrySet().iterator();
+			while (it.hasNext()) {
+				Map.Entry pairs = (Map.Entry) it.next();
+				fd_old.itemCal.put(pairs.getKey().toString(), pairs.getValue().toString());
+			}
+			dateMap.put(logDate, fd_old);
+		} else {
+			dateMap.put(logDate, fd);
+		}
 	}
 
 	/**
@@ -131,13 +178,6 @@ public class ViewHistoryActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case android.R.id.home:
-			// This ID represents the Home or Up button. In the case of this
-			// activity, the Up button is shown. Use NavUtils to allow users
-			// to navigate up one level in the application structure. For
-			// more details, see the Navigation pattern on Android Design:
-			//
-			// http://developer.android.com/design/patterns/navigation.html#up-vs-back
-			//
 			NavUtils.navigateUpFromSameTask(this);
 			return true;
 		}
@@ -150,7 +190,7 @@ public class ViewHistoryActivity extends Activity {
 
 	@SuppressLint("SimpleDateFormat")
 	private Date getDate(String dateString) {
-		SimpleDateFormat dateFormat = new SimpleDateFormat("EEE dd MMM yyyy");
+		SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, dd MMM yyyy");
 		try {
 			Date convertedDate = dateFormat.parse(dateString);
 			return convertedDate;

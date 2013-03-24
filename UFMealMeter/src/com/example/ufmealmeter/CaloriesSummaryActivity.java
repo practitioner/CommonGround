@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Calendar;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -31,7 +31,8 @@ public class CaloriesSummaryActivity extends Activity {
 	public final String userHistory = "history.txt";
 	ArrayList<String> selectedFoodItems;
 	ArrayList<String> selectedCal;
-
+	String delimiter = ":";
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -107,9 +108,9 @@ public class CaloriesSummaryActivity extends Activity {
 	private String getDisplaySummary() {
 		StringBuilder temp = new StringBuilder();
 		temp.append(getTodaysDate());
-		temp.append(",");
+		temp.append(delimiter);
 		temp.append(totalCalories);
-		temp.append(",");
+		temp.append(delimiter);
 		EditText price = (EditText) findViewById(R.id.price);
 		if (null != price.getText().toString() && !"".equalsIgnoreCase(price.getText().toString()))
 			temp.append(price.getText().toString());
@@ -121,7 +122,9 @@ public class CaloriesSummaryActivity extends Activity {
 	private void writeToFile() {
 		try {
 			OutputStreamWriter outputStreamWriter = new OutputStreamWriter(openFileOutput(userHistory, Context.MODE_PRIVATE | Context.MODE_APPEND));
+			//OutputStreamWriter outputStreamWriter = new OutputStreamWriter(openFileOutput(userHistory, Context.MODE_PRIVATE));
 			BufferedWriter bwriter = new BufferedWriter(outputStreamWriter);
+			bwriter.newLine();
 			bwriter.write(getDisplaySummary());
 			bwriter.newLine();
 			// Item name 1, Calorie 1
@@ -132,14 +135,13 @@ public class CaloriesSummaryActivity extends Activity {
 			while (i < selectedFoodItems.size()) {
 				temp = new StringBuilder();
 				temp = temp.append(selectedFoodItems.get(i));
-				temp = temp.append(",");
+				temp = temp.append(delimiter);
 				temp = temp.append(selectedCal.get(i));
 				i++;
 				bwriter.write(temp.toString());
 				bwriter.newLine();
 			}
 			bwriter.write("*");
-			bwriter.newLine();
 			bwriter.close();
 		} catch (IOException e) {
 
@@ -150,7 +152,10 @@ public class CaloriesSummaryActivity extends Activity {
 	@SuppressLint("SimpleDateFormat")
 	private String getTodaysDate() {
 		SimpleDateFormat formatter = new SimpleDateFormat("EEE, dd MMM yyyy");
-		Date now = new Date();
+		//Date now = new Date();
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.DATE, -1);
+		java.util.Date now = cal.getTime();
 		return formatter.format(now);
 
 	}

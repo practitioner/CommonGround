@@ -6,7 +6,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Random;
 import java.util.StringTokenizer;
 
 import android.app.ListActivity;
@@ -14,11 +17,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
+import android.text.GetChars;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.ListView;
 import android.widget.TextView;
 
 public class FoodItemActivity extends ListActivity {
@@ -51,7 +54,7 @@ public class FoodItemActivity extends ListActivity {
 
 		setListAdapter(adapter);
 		
-		//Add TextView for suggest a meal
+		/*//Add TextView for suggest a meal
 		TextView suggestAMealTextView=(TextView)findViewById(R.id.suggestAMealTextView);
 		final TextView suggestAMealExplainationTextView=(TextView)findViewById(R.id.suggestAMealExplainationTextView);
 		final TextView suggestAMealSuggestAgainTextView=(TextView)findViewById(R.id.suggestAMealSuggestAgainTextView);
@@ -91,7 +94,7 @@ public class FoodItemActivity extends ListActivity {
 					}
 				}
 			}
-		});
+		});*/
 		//--on click listener ends
 		
 		suggestAMealSuggestAgainTextView.setOnClickListener(new OnClickListener() {
@@ -107,7 +110,7 @@ public class FoodItemActivity extends ListActivity {
 					adapter.stopMealSuggestionAndClearBackgroundColor();
 				}
 			}
-		});
+		});*/
 		
 		
 	}
