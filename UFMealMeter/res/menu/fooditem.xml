@@ -11,8 +11,4 @@
           android:icon="@drawable/ic_go_food_item"
           android:title="@string/action_go"
           android:showAsAction="ifRoom"/>
-     
-     
-    
-
 </menu>
