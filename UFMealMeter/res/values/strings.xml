@@ -21,5 +21,7 @@
     <string name="you_selected_these_items">You selected these items : </string>
     <string name="title_activity_view_history">Your History</string>
     <string name="suggest_a_meal">Want us to suggest a meal?</string>
+    <string name="title_activity_view_history_indv_food"></string>
+    <string name="go">Go</string>
 
 </resources>

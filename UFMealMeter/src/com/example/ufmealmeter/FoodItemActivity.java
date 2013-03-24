@@ -51,7 +51,7 @@ public class FoodItemActivity extends ListActivity {
 
 		setListAdapter(adapter);
 		
-		//Add TextView for suggest a meal
+		/*//Add TextView for suggest a meal
 		TextView suggestAMealTextView=(TextView)findViewById(R.id.suggestAMealTextView);
 		
 		//set on click listener
@@ -69,7 +69,7 @@ public class FoodItemActivity extends ListActivity {
 				
 				
 			}
-		});
+		});*/
 		//--on click listener ends
 
 	}

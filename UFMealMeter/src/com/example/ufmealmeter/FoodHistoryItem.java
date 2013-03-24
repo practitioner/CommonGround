@@ -1,22 +1,20 @@
 package com.example.ufmealmeter;
 
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 public class FoodHistoryItem {
 	Date logDate;
 	String totalCalories;
 	String totalPrice;
-	ArrayList<String> foodItemNames = new ArrayList<String>();
-	ArrayList<Float> calories = new ArrayList<Float>();
+	HashMap<String, String> itemCal;
 
-	public FoodHistoryItem(Date logDate, String totalCalories, String totalPrice, ArrayList<String> foodItemNames, ArrayList<Float> calories) {
+	public FoodHistoryItem(Date logDate, String totalCalories, String totalPrice, HashMap<String, String> map) {
 		super();
 		this.logDate = logDate;
 		this.totalCalories = totalCalories;
 		this.totalPrice = totalPrice;
-		this.foodItemNames = foodItemNames;
-		this.calories = calories;
+		this.itemCal = map;
 	}
 
 }
