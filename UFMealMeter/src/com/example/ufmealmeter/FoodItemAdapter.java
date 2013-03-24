@@ -116,11 +116,19 @@ public class FoodItemAdapter extends ArrayAdapter<FoodItem> {
 		Random randomNumber = new Random();
 		List<FoodItem> foodItemsToSuggest = new ArrayList<FoodItem>();
 
+		List<Integer> usedRandomNumbers=new ArrayList<Integer>();
 		for (int i = 0; i < Constants.numberOfsuggestedFoodItems; i++) {
+			
 			int randomNumberForSelectingFoodItems = randomNumber.nextInt(high - low) + low;
-			int indexOfItemToRetreive = indexesOfSuggestibleFoodItems.get(randomNumberForSelectingFoodItems);
-			FoodItem foodItem = (FoodItem) foodItemList.get(indexOfItemToRetreive);
-			foodItemsToSuggest.add(foodItem);
+			
+			//should not have same random numbers
+			if(!usedRandomNumbers.contains(randomNumberForSelectingFoodItems)){
+				usedRandomNumbers.add(randomNumberForSelectingFoodItems);
+				int indexOfItemToRetreive = indexesOfSuggestibleFoodItems.get(randomNumberForSelectingFoodItems);
+				FoodItem foodItem = (FoodItem) foodItemList.get(indexOfItemToRetreive);
+				foodItemsToSuggest.add(foodItem);
+			}
+			
 		}
 
 		// remove from list
