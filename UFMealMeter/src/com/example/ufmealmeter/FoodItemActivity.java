@@ -21,6 +21,7 @@ import android.view.View.OnClickListener;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class FoodItemActivity extends ListActivity {
 
@@ -31,8 +32,8 @@ public class FoodItemActivity extends ListActivity {
 	float totalFat = 0;
 	ArrayList<String> indvCal = new ArrayList<String>();
 	public final String PREF_NAME = "threshold";
-	boolean isMealSuggestionOn=false;
-	
+	boolean isMealSuggestionOn = false;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -44,8 +45,8 @@ public class FoodItemActivity extends ListActivity {
 		// Select position from previous activity and bring that menu here
 		position = this.getIntent().getExtras().getInt("position");
 
-		final List<FoodItem> foodItemsOfThisRestaurant=readFoodItems(getRestaurantName(position));
-		
+		final List<FoodItem> foodItemsOfThisRestaurant = readFoodItems(getRestaurantName(position));
+
 		adapter = new FoodItemAdapter(this, foodItemsOfThisRestaurant);
 
 		setTitle(RestaurantName.actual_display_name[position]);
@@ -72,7 +73,43 @@ public class FoodItemActivity extends ListActivity {
 		foodItemsListView.setLayoutParams(layoutParamsSuggestOff);
 		//set on click listener
 		suggestAMealTextView.setOnClickListener(new OnClickListener() {
-			
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+
+				// activate some text view showing rationale behind selecting
+				// food items
+
+				// reorder list based on meal suggestion principles
+				if (isMealSuggestionOn) {
+					adapter.stopMealSuggestionAndClearBackgroundColor();
+					isMealSuggestionOn = false;
+					suggestAMealExplainationTextView.setVisibility(View.INVISIBLE);
+					suggestAMealSuggestAgainTextView.setVisibility(View.INVISIBLE);
+					foodItemsListView.setLayoutParams(layoutParamsSuggestOff);
+					// set layout params for
+
+				} else {
+					isMealSuggestionOn = true;
+
+					suggestAMealExplainationTextView.setVisibility(View.VISIBLE);
+					suggestAMealSuggestAgainTextView.setVisibility(View.VISIBLE);
+					foodItemsListView.setLayoutParams(layoutParamsSuggestOn);
+					boolean reorderSuccessful = adapter.changeOrderForSuggestAMeal();
+					if (!reorderSuccessful) {
+						suggestAMealExplainationTextView.setText(R.string.suggest_a_meal_error);
+						suggestAMealExplainationTextView.setTextColor(getResources().getColor(android.R.color.holo_red_light));
+						suggestAMealSuggestAgainTextView.setVisibility(View.INVISIBLE);
+						adapter.stopMealSuggestionAndClearBackgroundColor();
+					}
+				}
+			}
+		});
+		// --on click listener ends
+
+		suggestAMealSuggestAgainTextView.setOnClickListener(new OnClickListener() {
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
@@ -207,16 +244,21 @@ public class FoodItemActivity extends ListActivity {
 			NavUtils.navigateUpFromSameTask(this);
 			return true;
 		case R.id.menu_go:
-			Intent intent = new Intent(FoodItemActivity.this, CaloriesSummaryActivity.class);
-			intent.putStringArrayListExtra("foodNames", getSummary());
-			intent.putExtra("totalCal", totalCalories);
-			intent.putExtra("totalCarbs", totalCarbs);
-			intent.putExtra("totalFat", totalFat);
-			intent.putExtra("calBalance", getCalorieBalance());
-			intent.putExtra("budgetBalance", getBudgetBalance());
-			intent.putStringArrayListExtra("indvCalorie", indvCal);
-			intent.putExtra("position", position);
-			startActivity(intent);
+			ArrayList<String> selFood = getSummary();
+			if (null != selFood && selFood.size() > 0) {
+				Intent intent = new Intent(FoodItemActivity.this, CaloriesSummaryActivity.class);
+				intent.putStringArrayListExtra("foodNames", selFood);
+				intent.putExtra("totalCal", totalCalories);
+				intent.putExtra("totalCarbs", totalCarbs);
+				intent.putExtra("totalFat", totalFat);
+				intent.putExtra("calBalance", getCalorieBalance());
+				intent.putExtra("budgetBalance", getBudgetBalance());
+				intent.putStringArrayListExtra("indvCalorie", indvCal);
+				intent.putExtra("position", position);
+				startActivity(intent);
+			} else {
+				Toast.makeText(FoodItemActivity.this, "You didnt select any Food Item!", Toast.LENGTH_SHORT).show();
+			}
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
@@ -256,43 +298,36 @@ public class FoodItemActivity extends ListActivity {
 		}
 		return balance_budget;
 	}
-	
+
 	/*
-	public List<FoodItem> reorderFoodItemListToSuggestAMeal(List<FoodItem> foodItemList){
-		
-		List<Integer> indexesOfSuggestibleFoodItems=new ArrayList<Integer>();
-		
-		for(int i=0;i<foodItemList.size();i++){
-			FoodItem foodItem=(FoodItem)foodItemList.get(i);
-			if(foodItem.getCalories()<mealSuggestionCalorieThreshold){
-				indexesOfSuggestibleFoodItems.add(i);
-			}
-		}
-		
-		int low=0;
-		int high=indexesOfSuggestibleFoodItems.size();
-		
-		Random randomNumber=new Random();
-		List<FoodItem> foodItemsToSuggest=new ArrayList<FoodItem>();
-		
-		for(int i=0;i<numberOfsuggestedFoodItems;i++){
-			int randomNumberForSelectingFoodItems=randomNumber.nextInt(high-low)+low;
-			int indexOfItemToRetreive=indexesOfSuggestibleFoodItems.get(randomNumberForSelectingFoodItems);
-			FoodItem foodItem=(FoodItem)foodItemList.get(indexOfItemToRetreive);
-			foodItemsToSuggest.add(foodItem);
-		}
-		
-		//remove from list
-		for(int i=0;i<foodItemsToSuggest.size();i++){
-			foodItemList.remove(foodItemsToSuggest.get(i));
-		}
-			
-		//put back at front of list
-		for(int i=0;i<foodItemsToSuggest.size();i++){
-			foodItemList.add(0, foodItemList.get(i));
-		}
-		
-		return foodItemList;
-	}
-*/
+	 * public List<FoodItem> reorderFoodItemListToSuggestAMeal(List<FoodItem>
+	 * foodItemList){
+	 * 
+	 * List<Integer> indexesOfSuggestibleFoodItems=new ArrayList<Integer>();
+	 * 
+	 * for(int i=0;i<foodItemList.size();i++){ FoodItem
+	 * foodItem=(FoodItem)foodItemList.get(i);
+	 * if(foodItem.getCalories()<mealSuggestionCalorieThreshold){
+	 * indexesOfSuggestibleFoodItems.add(i); } }
+	 * 
+	 * int low=0; int high=indexesOfSuggestibleFoodItems.size();
+	 * 
+	 * Random randomNumber=new Random(); List<FoodItem> foodItemsToSuggest=new
+	 * ArrayList<FoodItem>();
+	 * 
+	 * for(int i=0;i<numberOfsuggestedFoodItems;i++){ int
+	 * randomNumberForSelectingFoodItems=randomNumber.nextInt(high-low)+low; int
+	 * indexOfItemToRetreive
+	 * =indexesOfSuggestibleFoodItems.get(randomNumberForSelectingFoodItems);
+	 * FoodItem foodItem=(FoodItem)foodItemList.get(indexOfItemToRetreive);
+	 * foodItemsToSuggest.add(foodItem); }
+	 * 
+	 * //remove from list for(int i=0;i<foodItemsToSuggest.size();i++){
+	 * foodItemList.remove(foodItemsToSuggest.get(i)); }
+	 * 
+	 * //put back at front of list for(int i=0;i<foodItemsToSuggest.size();i++){
+	 * foodItemList.add(0, foodItemList.get(i)); }
+	 * 
+	 * return foodItemList; }
+	 */
 }
