@@ -6,10 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Random;
 import java.util.StringTokenizer;
 
 import android.app.ListActivity;
@@ -17,11 +14,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
-import android.text.GetChars;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ListView;
 import android.widget.TextView;
 
 public class FoodItemActivity extends ListActivity {
@@ -33,6 +30,7 @@ public class FoodItemActivity extends ListActivity {
 	float totalFat = 0;
 	ArrayList<String> indvCal = new ArrayList<String>();
 	public final String PREF_NAME = "threshold";
+	boolean isMealSuggestionOn=false;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +38,8 @@ public class FoodItemActivity extends ListActivity {
 		// Show the Up button in the action bar.
 		setupActionBar();
 
+		setContentView(R.layout.activity_fooditem);
+		
 		// Select position from previous activity and bring that menu here
 		position = this.getIntent().getExtras().getInt("position");
 
@@ -53,7 +53,13 @@ public class FoodItemActivity extends ListActivity {
 		
 		//Add TextView for suggest a meal
 		TextView suggestAMealTextView=(TextView)findViewById(R.id.suggestAMealTextView);
-		
+		final TextView suggestAMealExplainationTextView=(TextView)findViewById(R.id.suggestAMealExplainationTextView);
+		final TextView suggestAMealSuggestAgainTextView=(TextView)findViewById(R.id.suggestAMealSuggestAgainTextView);
+		suggestAMealSuggestAgainTextView.setTextColor(getResources().getColor(android.R.color.holo_orange_dark));
+		suggestAMealExplainationTextView.setVisibility(View.INVISIBLE);
+		suggestAMealSuggestAgainTextView.setVisibility(View.INVISIBLE);
+		//RelativeLayout.LayoutParams layoutParams=new RelativeLayout.La
+		//ListView foodItemsListView=(ListView)findViewById(android.R.id.list);
 		//set on click listener
 		suggestAMealTextView.setOnClickListener(new OnClickListener() {
 			
@@ -65,13 +71,45 @@ public class FoodItemActivity extends ListActivity {
 				
 				
 				//reorder list based on meal suggestion principles
-				adapter.changeOrderForSuggestAMeal();
-				
-				
+				if(isMealSuggestionOn){
+					adapter.stopMealSuggestionAndClearBackgroundColor();
+					isMealSuggestionOn=false;
+					suggestAMealExplainationTextView.setVisibility(View.INVISIBLE);
+					suggestAMealSuggestAgainTextView.setVisibility(View.INVISIBLE);
+					//set layout params for 
+					
+				} else {
+					isMealSuggestionOn=true;
+					suggestAMealExplainationTextView.setVisibility(View.VISIBLE);
+					suggestAMealSuggestAgainTextView.setVisibility(View.VISIBLE);
+					boolean reorderSuccessful=adapter.changeOrderForSuggestAMeal();
+					if(!reorderSuccessful){
+						suggestAMealExplainationTextView.setText(R.string.suggest_a_meal_error);
+						suggestAMealExplainationTextView.setTextColor(getResources().getColor(android.R.color.holo_red_light));
+						suggestAMealSuggestAgainTextView.setVisibility(View.INVISIBLE);
+						adapter.stopMealSuggestionAndClearBackgroundColor();
+					}
+				}
 			}
 		});
 		//--on click listener ends
-
+		
+		suggestAMealSuggestAgainTextView.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				boolean reordderSuccessful=adapter.changeOrderForSuggestAMeal();
+				if(!reordderSuccessful){
+					suggestAMealExplainationTextView.setText(R.string.suggest_a_meal_error);
+					suggestAMealExplainationTextView.setTextColor(getResources().getColor(android.R.color.holo_red_light));
+					suggestAMealSuggestAgainTextView.setVisibility(View.INVISIBLE);
+					adapter.stopMealSuggestionAndClearBackgroundColor();
+				}
+			}
+		});
+		
+		
 	}
 
 	private String getRestaurantName(int position) {

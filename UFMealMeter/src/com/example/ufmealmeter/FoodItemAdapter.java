@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import android.R;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,7 +22,7 @@ public class FoodItemAdapter extends ArrayAdapter<FoodItem> {
 	private final SparseBooleanArray foodItemSelected;
 
 	public FoodItemAdapter(Context context, List<FoodItem> itemsList) {
-		super(context, R.layout.activity_indv_fooditem, itemsList);
+		super(context, com.example.ufmealmeter.R.layout.activity_indv_fooditem, itemsList);
 		this.context = context;
 		this.foodItemList = itemsList;
 		this.foodItemSelected = new SparseBooleanArray();
@@ -56,11 +56,17 @@ public class FoodItemAdapter extends ArrayAdapter<FoodItem> {
 		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		FoodItem foodItem = foodItemList.get(position);
 
-		View tweetView = inflater.inflate(R.layout.activity_indv_fooditem, parent, false);
-		TextView textView = (TextView) tweetView.findViewById(R.id.text);
+		View tweetView = inflater.inflate(com.example.ufmealmeter.R.layout.activity_indv_fooditem, parent, false);
+		TextView textView = (TextView) tweetView.findViewById(com.example.ufmealmeter.R.id.text);
+		final CheckBox cb = (CheckBox) tweetView.findViewById(com.example.ufmealmeter.R.id.selectfooditem);
 		textView.setText(foodItem.toString());
+		if(foodItem.isSuggestible){
+			textView.setBackgroundResource(R.color.holo_blue_light);
+			cb.setBackgroundResource(R.color.holo_green_light);
+		}
+		
 
-		final CheckBox cb = (CheckBox) tweetView.findViewById(R.id.selectfooditem);
+		
 		cb.setOnClickListener(new OnClickListener() {
 
 			public void onClick(View v) {
@@ -80,16 +86,30 @@ public class FoodItemAdapter extends ArrayAdapter<FoodItem> {
 
 	}
 
-	public void changeOrderForSuggestAMeal() {
+	public boolean changeOrderForSuggestAMeal() {
+		
+		boolean reorderSuccessful=false;
 		List<Integer> indexesOfSuggestibleFoodItems = new ArrayList<Integer>();
 
+		float calorieLimitUsedForSuggestion=FoodItemUtils.determineCalorieLimitToSuggestMeal(context);
+		float minimumCalorieCountOfAnyProduct=1000;
 		for (int i = 0; i < foodItemList.size(); i++) {
 			FoodItem foodItem = (FoodItem) foodItemList.get(i);
-			if (foodItem.getCalories() < FoodItemUtils.determineCalorieLimitToSuggestMeal(context)) {
+			foodItem.setSuggestible(false);
+			float calorieCount=foodItem.getCalories();
+			
+			//for the case where all food items are above the calorie limit
+			if(calorieCount<minimumCalorieCountOfAnyProduct){
+				minimumCalorieCountOfAnyProduct=calorieCount;
+			}
+			if (calorieCount < calorieLimitUsedForSuggestion ) {
 				indexesOfSuggestibleFoodItems.add(i);
 			}
 		}
 
+		if(calorieLimitUsedForSuggestion<minimumCalorieCountOfAnyProduct){
+			return reorderSuccessful;
+		}
 		int low = 0;
 		int high = indexesOfSuggestibleFoodItems.size();
 
@@ -110,10 +130,22 @@ public class FoodItemAdapter extends ArrayAdapter<FoodItem> {
 
 		// put back at front of list
 		for (int i = 0; i < foodItemsToSuggest.size(); i++) {
-			foodItemList.add(0, foodItemList.get(i));
+			FoodItem foodItem=foodItemsToSuggest.get(i);
+			foodItem.setSuggestible(true);
+			foodItemList.add(0, foodItem);
 		}
 		
 		//notify adapter
 		this.notifyDataSetChanged();
+		reorderSuccessful=true;
+		return reorderSuccessful;
+	}
+	
+	public void stopMealSuggestionAndClearBackgroundColor(){
+		for(int i=0;i<Constants.numberOfsuggestedFoodItems;i++){
+			foodItemList.get(i).setSuggestible(false);
+		}
+		this.notifyDataSetChanged();
+		
 	}
 }

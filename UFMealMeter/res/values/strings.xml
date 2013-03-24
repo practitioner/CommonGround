@@ -21,5 +21,14 @@
     <string name="you_selected_these_items">You selected these items : </string>
     <string name="title_activity_view_history">Your History</string>
     <string name="suggest_a_meal">Want us to suggest a meal?</string>
+    <string name="suggest_a_meal_explaination">Suggestions are based on your calorie balance and calorie limit
+    If you haven`t set your calorie limit,the default calorie limit for suggestion is set to 220 calories
+    We suggest three food items from the menu at a time,all which are highlighted in <i>BLUE</i>
+   	</string>
+    <string name="suggest_a_meal_suggest_again">Suggest Again</string>
+    <string name="suggest_a_meal_error">We have no suggestions for you at this time.
+    This may be because there are no food items that are below you required calorie balance
+    </string>
+    
 
 </resources>

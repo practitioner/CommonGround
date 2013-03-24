@@ -7,6 +7,7 @@ public class FoodItem {
 	String servingSize;
 	float totalFat;
 	int totalCarbs;
+	boolean isSuggestible=false;
 
 	public FoodItem() {
 	}
@@ -59,6 +60,13 @@ public class FoodItem {
 		this.totalCarbs = totalCarbs;
 	}
 
+	public boolean isSuggestible() {
+		return isSuggestible;
+	}
+
+	public void setSuggestible(boolean isSuggestible) {
+		this.isSuggestible = isSuggestible;
+	}
 
 	@Override
 	public String toString() {
