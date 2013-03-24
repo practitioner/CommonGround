@@ -77,9 +77,6 @@ public class FoodItemActivity extends ListActivity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				
-				//activate some text view showing rationale behind selecting food items
-				
-				
 				//reorder list based on meal suggestion principles
 				if(isMealSuggestionOn){
 					adapter.stopMealSuggestionAndClearBackgroundColor();
