@@ -40,8 +40,9 @@ public class FoodItemActivity extends ListActivity {
 		// Show the Up button in the action bar.
 		setupActionBar();
 
-		setContentView(R.layout.activity_fooditem);
 		
+		setContentView(R.layout.activity_fooditem);
+
 		// Select position from previous activity and bring that menu here
 		position = this.getIntent().getExtras().getInt("position");
 
