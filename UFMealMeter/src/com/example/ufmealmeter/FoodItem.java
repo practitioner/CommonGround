@@ -78,7 +78,7 @@ public class FoodItem {
 		sb.append(this.calories);
 		sb.append(" Total Fat: ");
 		sb.append(this.totalFat);
-		sb.append(" Total Carbs(g): ");
+		sb.append(" Total Carbs : ");
 		sb.append(this.totalCarbs);
 		return sb.toString();
 	}

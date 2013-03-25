@@ -32,4 +32,9 @@ public class FoodItemUtils {
 		}
 	}
 	
+	
+	//save or update frequent food items into editor while saving on FoodItemActivity and FrequentItemsActivity
+	
+	
+	
 }

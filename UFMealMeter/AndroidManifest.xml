@@ -62,6 +62,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.ufmealmeter.ViewHistoryActivity" />
         </activity>
+        <activity
+            android:name="com.example.ufmealmeter.FrequentItemsActivity"
+            android:label="@string/title_activity_frequent_items" >
+        </activity>
     </application>
 
 </manifest>

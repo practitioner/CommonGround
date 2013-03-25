@@ -1,5 +1,4 @@
-
-
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
     <string name="app_name">UFMealMeter</string>
@@ -26,12 +25,10 @@
     <string name="go">Go</string>
     <string name="suggest_a_meal_explaination">Suggestions are based on your calorie balance and calorie limit
     If you haven`t set your calorie limit,the default calorie limit for suggestion is set to 220 calories
-    We suggest three food items from the menu at a time,all which are highlighted in <i>BLUE</i>
-   	</string>
+    We suggest three food items from the menu at a time,all which are highlighted in <i>BLUE</i></string>
     <string name="suggest_a_meal_suggest_again">Suggest Again</string>
     <string name="suggest_a_meal_error">We have no suggestions for you at this time.
-    This may be because there are no food items that are below you required calorie balance
-    </string>
-    
+    This may be because there are no food items that are below you required calorie balance</string>
+    <string name="title_activity_frequent_items">FrequentItemsActivity</string>
 
 </resources>
